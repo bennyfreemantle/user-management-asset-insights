@@ -109,9 +109,7 @@ export default function UserManagement() {
       <div className="container mx-auto p-4 flex flex-col gap">
         <div className="flex flex-col gap-4">
           <div>
-            <h1 className="text-2xl font-bold invert">
-              Employee Management Software
-            </h1>
+            <h1 className="text-2xl font-bold invert">User Management</h1>
           </div>
           <div className="flex gap-4">
             <Button

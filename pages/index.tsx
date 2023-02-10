@@ -1,43 +1,7 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "@next/font/google";
 import UserManagement from "@/components/UserManagement/UserManagement";
-
-const inter = Inter({ subsets: ["latin"] });
+import Head from "next/head";
 
 export default function Home() {
-  async function createUser() {
-    try {
-      const response = await fetch("http://localhost:3000/api/users/create", {
-        method: "POST",
-        body: JSON.stringify({
-          first_name: "Ben1",
-          last_name: "Freemantle",
-          email: "bennyfreemantle+1@gmail.com",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // get the success message from api response
-        console.log(data.message);
-      } else {
-        // response is not 200 ok, must be an error handle
-        // get the error message from api response
-        console.log(data.message);
-      }
-    } catch (error) {
-      // if we get this point, it will be a network error
-      console.log(`Error with network`);
-    } finally {
-      // do something regardless of response
-      // i.e reset state etc
-    }
-  }
   return (
     <>
       <Head>
