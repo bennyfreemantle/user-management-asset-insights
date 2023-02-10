@@ -57,9 +57,47 @@ export default function UserManagement() {
           // todo: use state / reducer and remove user from state instead of having to do 2 Fetch request, 1 - to delete & 2 - re fetch all users
           getAllUsers();
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log("network error");
+      }
     } else {
       console.log("canceled deleting user");
+    }
+  }
+
+  async function updateUser(user: User) {
+    if (!user) return;
+
+    // construct our user object to update
+    const userData = {
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+    };
+
+    try {
+      const response = await fetch(`/api/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.log(data.message);
+        return;
+      } else {
+        console.log(data.message);
+
+        // refetch all users from db
+        // todo: use state / reducer and remove user from state instead of having to do 2 Fetch request, 1 - to delete & 2 - re fetch all users
+        getAllUsers();
+      }
+    } catch (error) {
+      console.log("network error");
     }
   }
 
@@ -85,7 +123,11 @@ export default function UserManagement() {
             </Button>
           </div>
           <div className="relative">
-            <UserTable users={users} deleteUser={deleteUser} />
+            <UserTable
+              users={users}
+              deleteUser={deleteUser}
+              updateUser={updateUser}
+            />
             {toggleModal ? (
               <AddUserModal
                 toggleUserModal={toggleUserModal}

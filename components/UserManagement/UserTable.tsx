@@ -1,15 +1,38 @@
 import { User } from "@/types";
+import { useState } from "react";
 import Button from "../Button";
 
 export default function UserTable({
   users,
   deleteUser,
+  updateUser,
 }: {
   users: User[];
   deleteUser: (id: number) => void;
+  updateUser: (user: User) => void;
 }) {
-  if (users) {
-    console.log(users);
+  const [editMode, setEditMode] = useState(false);
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  const [selectedUser, setSelectedUser] = useState<User>({
+    id: 0,
+    first_name: "",
+    last_name: "",
+    email: "",
+    createdAt: "",
+    updatedAt: "",
+  });
+
+  function editUser(user: User) {
+    console.log(user);
+    setEditMode(true);
+    setSelectedUser(user);
+  }
+
+  function saveUser() {
+    setEditMode(false);
+    updateUser(selectedUser);
   }
 
   return (
@@ -26,12 +49,57 @@ export default function UserTable({
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {users.map((user, index) => (
             <tr className="border-b" key={user.id}>
-              <td className="text-left py-3">{user.id}</td>
-              <td className="text-left py-3">{user.first_name}</td>
-              <td className="text-left py-3">{user.last_name}</td>
-              <td className="text-left py-3">{user.email}</td>
+              <td className="text-left py-3">{index + 1}</td>
+              {editMode && selectedUser && selectedUser.id === user.id ? (
+                <td>
+                  <input
+                    className="text-zinc-900 p-1 outline outline-2 outline-blue-600/75"
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        first_name: e.target.value,
+                      })
+                    }
+                    value={selectedUser.first_name}
+                  />
+                </td>
+              ) : (
+                <td className="text-left py-3">{user.first_name}</td>
+              )}
+              {editMode && selectedUser && selectedUser.id === user.id ? (
+                <td>
+                  <input
+                    className="text-zinc-900 p-1 outline outline-2 outline-blue-600/75"
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        last_name: e.target.value,
+                      })
+                    }
+                    value={selectedUser.last_name}
+                  />
+                </td>
+              ) : (
+                <td className="text-left py-3">{user.last_name}</td>
+              )}
+              {editMode && selectedUser && selectedUser.id === user.id ? (
+                <td>
+                  <input
+                    className="text-zinc-900 p-1 outline outline-2 outline-blue-600/75"
+                    onChange={(e) =>
+                      setSelectedUser({
+                        ...selectedUser,
+                        email: e.target.value,
+                      })
+                    }
+                    value={selectedUser.email}
+                  />
+                </td>
+              ) : (
+                <td className="text-left py-3">{user.email}</td>
+              )}
               <td className="text-left py-3">{user.createdAt.toString()}</td>
               <td className="text-left py-3">
                 <div className="flex gap-2">
@@ -54,22 +122,44 @@ export default function UserTable({
                       />
                     </svg>
                   </Button>
-                  <Button>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                  {editMode && selectedUser?.id === user.id ? (
+                    <Button
+                      className="bg-green-600 hover:bg-green-600/75"
+                      onClick={() => saveUser()}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-                      />
-                    </svg>
-                  </Button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M4.5 12.75l6 6 9-13.5"
+                        />
+                      </svg>
+                    </Button>
+                  ) : (
+                    <Button onClick={() => editUser(user)}>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                        />
+                      </svg>
+                    </Button>
+                  )}
                 </div>
               </td>
             </tr>

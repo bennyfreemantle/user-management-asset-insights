@@ -55,7 +55,7 @@ export default function AddUserModal({
   }
 
   return (
-    <div className="absolute top-0 left-0 flex flex-col justify-center container mx-auto p-4 h-96 bg-zinc-300 rounded">
+    <div className="absolute top-0 left-0 flex flex-col justify-center container mx-auto p-4 h-96 bg-zinc-50 rounded">
       <div className="relative">
         <div className="absolute top-0 right-0 ">
           <button onClick={() => toggleUserModal(false)}>
