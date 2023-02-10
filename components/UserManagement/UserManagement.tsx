@@ -34,6 +34,35 @@ export default function UserManagement() {
     }
   }
 
+  async function deleteUser(id: number) {
+    // prompt user they're about to delete a user
+    if (confirm("Are you sure you want to delete this user ?")) {
+      try {
+        const response = await fetch(`/api/users/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          console.log(data.message);
+          return;
+        } else {
+          console.log(data.message);
+
+          // refetch all users from db
+          // todo: use state / reducer and remove user from state instead of having to do 2 Fetch request, 1 - to delete & 2 - re fetch all users
+          getAllUsers();
+        }
+      } catch (error) {}
+    } else {
+      console.log("canceled deleting user");
+    }
+  }
+
   function toggleUserModal() {
     setToggleModal(!toggleModal);
   }
@@ -50,14 +79,13 @@ export default function UserManagement() {
           <div className="flex gap-4">
             <Button
               className="bg-green-600 hover:bg-green-600/75"
-              handleClick={toggleUserModal}
+              onClick={toggleUserModal}
             >
               Add Employee
             </Button>
-            <Button>Actions</Button>
           </div>
           <div className="relative">
-            <UserTable users={users} />
+            <UserTable users={users} deleteUser={deleteUser} />
             {toggleModal ? (
               <AddUserModal
                 toggleUserModal={toggleUserModal}
