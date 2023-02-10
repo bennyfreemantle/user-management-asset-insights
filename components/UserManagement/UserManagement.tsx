@@ -91,7 +91,6 @@ export default function UserManagement() {
         return;
       } else {
         console.log(data.message);
-
         // refetch all users from db
         // todo: use state / reducer and remove user from state instead of having to do 2 Fetch request, 1 - to delete & 2 - re fetch all users
         getAllUsers();

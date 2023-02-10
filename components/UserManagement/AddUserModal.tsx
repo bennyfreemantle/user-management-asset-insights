@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { FormField } from "../FormField";
 
 export default function AddUserModal({
   toggleUserModal,
@@ -81,60 +82,36 @@ export default function AddUserModal({
               onSubmit={(e) => createUser(e)}
               className="w-full flex flex-col gap-3 md:w-[640px]"
             >
-              <div className="flex flex-col">
-                <label htmlFor="first_name" className="text-gray-900">
-                  First Name
-                </label>
-                <div className="border">
-                  <input
-                    type="text"
-                    name="first_name"
-                    id="first_name"
-                    required
-                    onChange={(e) => setFirstName(e.target.value)}
-                    className="rounded p-1 w-full outline-none"
-                  />
-                </div>
-                {error ? (
-                  <p className="text-red-500 text-sm font-light">{error}</p>
-                ) : null}
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="last_name" className="text-gray-900">
-                  Last Name
-                </label>
-                <div className="border">
-                  <input
-                    type="text"
-                    name="last_name"
-                    id="last_name"
-                    required
-                    onChange={(e) => setLastName(e.target.value)}
-                    className="rounded p-1 w-full outline-none"
-                  />
-                </div>
-                {error ? (
-                  <p className="text-red-500 text-sm font-light">{error}</p>
-                ) : null}
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="email" className="text-gray-900">
-                  Email
-                </label>
-                <div className="border">
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="rounded p-1 w-full outline-none"
-                  />
-                </div>
-                {error ? (
-                  <p className="text-red-500 text-sm font-light">{error}</p>
-                ) : null}
-              </div>
+              <FormField
+                label="First Name"
+                type="text"
+                name="first_name"
+                id="first_name"
+                required
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                error={error}
+              />
+              <FormField
+                label="Last Name"
+                type="text"
+                name="last_name"
+                id="last_name"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                error={error}
+              />
+              <FormField
+                label="Email"
+                type="email"
+                name="email"
+                id="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={error}
+              />
               <button className="bg-blue-600 text-gray-50 text-lg p-2 rounded hover:bg-blue-500">
                 Add User
               </button>

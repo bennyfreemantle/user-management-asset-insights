@@ -26,6 +26,7 @@ export default function UserTable({
 
   function editUser(user: User) {
     console.log(user);
+    // Set edit more to true so it can render our input fields
     setEditMode(true);
     setSelectedUser(user);
   }
