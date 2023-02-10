@@ -1,95 +1,36 @@
-import { User, UserResponse } from "@/types";
-import { GetServerSideProps } from "next";
-import React, { useEffect, useState } from "react";
+import { User } from "@/types";
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const response = await fetch("/api/users");
-
-//   const users: UserResponse = await response.json();
-
-//   return {
-//     props: {
-//       users,
-//     },
-//   };
-// };
-
-export default function UserTable() {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    async function getAllUsers() {
-      const response = await fetch("/api/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // todo: learn tRPC for type safety both client and server
-        return data.message;
-      } else {
-        console.log(data.message);
-        if (data) {
-          setUsers(data.users);
-        }
-      }
-    }
-
-    getAllUsers();
-  }, []);
-
+export default function UserTable({ users }: { users: User[] }) {
   if (users) {
     console.log(users);
   }
   return (
     <div>
-      <div className="">
-        <div className="grid grid-cols-6 text-zinc-50">
-          <div>
-            <h2>No.</h2>
-          </div>
-          <div>
-            <h2>First Name</h2>
-          </div>
-          <div>
-            <h2>Last Name</h2>
-          </div>
-          <div>
-            <h2>Email</h2>
-          </div>
-          <div>
-            <h2>Created At</h2>
-          </div>
-          <div>
-            <h2>Actions</h2>
-          </div>
-        </div>
-        {/* {users ? (
-          <div>
-            {users.map((user) => (
-              <tr className="border text-left p-2" key={user.id}>
-                <td className="border text-left p-2 text-zinc-50">{user.id}</td>
-                <td className="border text-left p-2 text-zinc-50">
-                  {user.first_name}
-                </td>
-                <td className="border text-left p-2 text-zinc-50">
-                  {user.last_name}
-                </td>
-                <td className="border text-left p-2 text-zinc-50">
-                  {user.email}
-                </td>
-                <td className="border text-left p-2 text-zinc-50">
-                  {user.createdAt.toString()}
-                </td>
-              </tr>
-            ))}
-          </div>
-        ) : null} */}
-      </div>
+      <table className="w-full text-zinc-50">
+        <thead>
+          <tr className="">
+            <th className="text-left border-b">No.</th>
+            <th className="text-left border-b">First Name.</th>
+            <th className="text-left border-b">Last Name.</th>
+            <th className="text-left border-b">Email.</th>
+            <th className="text-left border-b">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr className="border-b" key={user.id}>
+              <td>
+                <input type="checkbox" />
+              </td>
+              <td className="text-left py-3">{user.id}</td>
+              <td className="text-left py-3">{user.first_name}</td>
+              <td className="text-left py-3">{user.last_name}</td>
+              <td className="text-left py-3">{user.email}</td>
+              <td className="text-left py-3">{user.createdAt.toString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
