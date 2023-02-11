@@ -16,7 +16,7 @@ We would like you to create a web application that produces some kind of user ma
 Create a .env file and paste your postgresql database url inside
 
 ```bash
-echo DATABASE_URL="YOUR_POSTGRESQL_DB_STRING" > .env
+echo DATABASE_URL="YOUR_POSTGRESQL_DB_STRING" > .env.local
 ```
 
 Install dependencies
@@ -26,10 +26,9 @@ npm install
 ```
 
 Create a Prisma migration
--> this will setup your database tables automatically
 
 ```bash
-npx prisma migrate dev
+npm run migrate:dev
 ```
 
 You'll be prompted for a migration name just call it **init**
@@ -43,3 +42,9 @@ Run the app
 ```bash
 npm run dev
 ```
+
+## Tech used
+
+- Next.js for both front & node backend (api folder)
+- Typescript
+- Tailwind
