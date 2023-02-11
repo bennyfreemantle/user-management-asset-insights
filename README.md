@@ -1,5 +1,7 @@
 # Asset Insights Coding Test
 
+:fireworks: [Live demo](https://ai-coding-test.netlify.app/)
+
 ## Original Brief
 
 We would like you to create a web application that produces some kind of user management functionality. The application should be able to:
